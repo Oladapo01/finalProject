@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  mysql:
+    container_name: mysql-devops
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: devops
+      MYSQL_USER: devops
+      MYSQL_PASSWORD: devops
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  flask_backend:  # Updated service name
+    container_name: flask-app  # Adjusted container name
+    build:
+      context: ./backend  # Assuming backend files are in a 'backend' directory
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mysql
+    environment:
+      - MYSQL_HOST=mysql
+      - MYSQL_DATABASE=devops
+      - MYSQL_USER=devops
+      - MYSQL_PASSWORD=devops
+  react_native_frontend:
+    build:
+      context: ./frontend  # Assuming frontend files are in a 'frontend' directory
+      dockerfile: Dockerfile
+    volumes:
+      - ./frontend:/usr/src/app/frontend  # Mount frontend directory
+    ports:
+      - "19000:19000"  # Expose React Native development server port (if needed)
+volumes:
+  mysql-data:
