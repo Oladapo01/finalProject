@@ -1,18 +1,17 @@
 version: '3.8'
 
 services:
-  mysql:
-    container_name: mysql-finalProject
-    image: mysql:5.7
+  postgresql:
+    container_name: postgresql-finalProject
+    image: postgres:latest
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: devops
-      MYSQL_USER: devops
-      MYSQL_PASSWORD: devops
+      POSTGRES_USER: devops
+      POSTGRES_PASSWORD: devops
+      POSTGRES_DB: devops
     ports:
-      - "3306:3306"
+      - "5432:5432"
     volumes:
-      - mysql-data:/var/lib/mysql
+      - postgresql-data:/var/lib/postgresql/data
 
   flask_backend:
     container_name: flask-app
@@ -25,12 +24,13 @@ services:
     ports:
       - "5000:5000"
     depends_on:
-      - mysql
+      - postgresql
     environment:
-      - MYSQL_HOST=mysql
-      - MYSQL_DATABASE=devops
-      - MYSQL_USER=devops
-      - MYSQL_PASSWORD=devops
+      - DB_HOST=postgresql
+      - DB_PORT=5432
+      - DB_DATABASE=devops
+      - DB_USER=devops
+      - DB_PASSWORD=devops
 
   react_native_frontend:
     build:
@@ -43,4 +43,4 @@ services:
       - "19000:19000"
 
 volumes:
-  mysql-data:
+  postgresql-data:
