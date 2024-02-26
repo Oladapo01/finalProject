@@ -5,9 +5,9 @@ services:
     container_name: postgresql-finalProject
     image: postgres:latest
     environment:
-      POSTGRES_USER: devops
-      POSTGRES_PASSWORD: devops
-      POSTGRES_DB: devops
+      POSTGRES_USER: project
+      POSTGRES_PASSWORD: project
+      POSTGRES_DB: final_project
     ports:
       - "5432:5432"
     volumes:
@@ -19,7 +19,7 @@ services:
       context: .
       dockerfile: backend/Dockerfile
     volumes:
-      - .:/usr/src/app
+      - ./backend:/usr/src/app
       - /usr/src/app/node_modules
     ports:
       - "5000:5000"
@@ -32,15 +32,14 @@ services:
       - DB_USER=devops
       - DB_PASSWORD=devops
 
-  react_native_frontend:
+  angular_frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile
     volumes:
-      - ./frontend:/usr/src/app
       - /usr/src/app/node_modules
     ports:
-      - "19000:19000"
+      - "4200:80"
 
 volumes:
   postgresql-data:

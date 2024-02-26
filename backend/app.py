@@ -1,16 +1,22 @@
 from flask import Flask, request, jsonify
-import pymysql.cursors
-from flask_cors import CORS
 from database import DBPool
+from flask_cors import CORS
 
 
 
 app = Flask(__name__)
+CORS(app)
 db_pool = DBPool()
 
 # Create tables when the application starts
-db_pool.create_table()
+with app.app_context():
+    db_pool.create_table()
 
+
+
+@app.route('/hello', methods= ['GET'])
+def hello_world():
+    return jsonify(message="Hello, World!")
 
 
 # Route to get all languages
