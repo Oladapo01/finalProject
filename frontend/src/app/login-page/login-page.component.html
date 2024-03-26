@@ -1,0 +1,16 @@
+<div class="login-container">
+    <form (ngSubmit)="onLogin()" #loginForm="ngForm">
+      <div class="form-group">
+        <label for="username">Username:</label>
+        <input type="text" id="username" [(ngModel)]="user.username" name="username" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" [(ngModel)]="user.password" name="password" required>
+      </div>
+      <button type="submit" [disabled]="!loginForm.valid">Login</button>
+    </form>
+    <a routerLink="javascript:void(0)" (click)="openForgotPasswordModal()" class="forgot-password">Forgot password?</a>
+    <button (click)="openCreateAccountModal()">Create account</button>
+  </div>
+  

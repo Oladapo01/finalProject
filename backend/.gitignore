@@ -1,0 +1,6 @@
+git venv
+books
+!/latin-bert/models/latin_bert/pytorch_model.bin
+
+!/venv/
+!/books/

@@ -1,0 +1,119 @@
+<div class="modal" [ngClass]="{'hidden': !showModal}">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="close" (click)="onClose()">x</span>
+            <h2>Create Account</h2>
+        </div>
+        <div class="modal-body">
+            <form (ngSubmit)="onSubmit()" #createAccountForm="ngForm">
+                <div *ngIf="step === 1">
+                    <div class="form-group">
+                        <label for="username">Username:</label>
+                        <input type="text" id="username" [(ngModel)]="username" name="username" required>
+                        <div *ngIf="!createAccountForm.controls['username']?.valid && createAccountForm.controls['username']?.touched">
+                            <p class="error-message">Please enter a username</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" [(ngModel)]="email" name="email" required>
+                        <div *ngIf="!createAccountForm.controls['email']?.valid && createAccountForm.controls['email']?.touched">
+                            <p class="error-message">Please enter a valid email address</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" [(ngModel)]="password" name="password" required>
+                        <div *ngIf="!createAccountForm.controls['password']?.valid && createAccountForm.controls['password']?.touched">
+                            <p class="error-message">Please enter a password</p>
+                        </div>
+                    </div>
+                    <a class="btn-transparent" (click)="prevStep()">Back</a>
+                    <button (click)="nextStep()">Next</button>
+                </div>
+                
+                <div *ngIf="step === 2">
+                    <div class="form-group">
+                        <label for="first_name">First Name:</label>
+                        <input type="text" id="first_name" [(ngModel)]="first_name" name="first_name">
+                    </div>
+                    <div class="form-group">
+                        <label for="last_name">Last Name:</label>
+                        <input type="text" id="last_name" [(ngModel)]="last_name" name="last_name">
+                    </div>
+                    <a class="btn-transparent" (click)="prevStep()">Back</a>
+                    <button (click)="nextStep()">Next</button>
+                </div>
+                
+                <div *ngIf="step === 3">
+                    <div class="form-group">
+                        <label for="date_of_birth">Date of Birth:</label>
+                        <input type="date" id="date_of_birth" [(ngModel)]="date_of_birth" name="date_of_birth">
+                    </div>
+                    <a class="btn-transparent" (click)="prevStep()">Back</a>
+                    <button (click)="nextStep()">Next</button>
+                </div>
+                
+                <div *ngIf="step === 4">
+                    <div class="form-group">
+                        <label for="gender">Gender:</label>
+                        <select id="gender" [(ngModel)]="gender" name="gender">
+                            <option *ngFor="let option of genderOptions" [value]="option">
+                                {{ option }}
+                            </option>
+                        </select>
+                    </div>
+                    <a class="btn-transparent" (click)="prevStep()">Back</a>
+                    <button (click)="nextStep()">Next</button>
+                </div>
+                
+                <div *ngIf="step === 5">
+                    <div class="form-group">
+                        <label for="interests">Interests:</label>
+                        <div *ngFor="let interest of interests">
+                            <input type="checkbox" id="{{ interest }}" [checked]="isSelected(interest)" (change)="onInterestChange($event, interest)">
+                            <label for="{{ interest }}">{{ interest }}</label>
+                        </div>
+                    </div>
+                    <a class="btn-transparent" (click)="prevStep()">Back</a>
+                    <button (click)="nextStep()">Next</button>
+                </div>
+                
+                <div *ngIf="step === 6">
+                    <div class="form-group">
+                        <label for="goals">Goals:</label>
+                        <input type="text" id="goals" [(ngModel)]="goals" name="goals">
+                    </div>
+                    <a class="btn-transparent" (click)="prevStep()">Back</a>
+                    <button (click)="nextStep()">Next</button>
+                </div>
+                
+                <div *ngIf="step === 7">
+                    <div class="form-group">
+                        <label for="language_proficiency">Language Proficiency:</label>
+                        <input type="text" id="language_proficiency" [(ngModel)]="language_proficiency" name="language_proficiency">
+                    </div>
+                    <a class="btn-transparent" (click)="prevStep()">Back</a>
+                    <button (click)="nextStep()">Next</button>
+                </div>
+                
+                <div *ngIf="step === 8">
+                    <div class="form-group">
+                        <label for="preferred_learning_style">Preferred Learning Style:</label>
+                        <input type="text" id="preferred_learning_style" [(ngModel)]="preferred_learning_style" name="preferred_learning_style">
+                    </div>
+                    <a class="btn-transparent" (click)="prevStep()">Back</a>
+                    <button (click)="nextStep()">Next</button>
+                </div>
+                
+                <div *ngIf="step === 9">
+                    <div class="form-group">
+                        <label for="accessibility_needs">Accessibility Needs:</label>
+                        <input type="text" id="accessibility_needs" [(ngModel)]="accessibility_needs" name="accessibility_needs">
+                    </div>
+                </div>
+                <button type="submit" *ngIf="step === totalSteps">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
